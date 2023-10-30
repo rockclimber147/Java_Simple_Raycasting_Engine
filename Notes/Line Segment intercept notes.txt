@@ -1,0 +1,1 @@
+A line segment can be thought of as the difference of two vectors.

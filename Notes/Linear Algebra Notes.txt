@@ -1,0 +1,148 @@
+########################################################################################################################
+                                                  VECTORS
+########################################################################################################################
+
+Think of vectors as arrows rooted at the origin and stretching to a set of coordinates. Coordinates exist in a 2d plane
+with an x and a y-axis. Positive direction is up and to the right, with x being horizontal and y being vertical.
+
+                                              [x]
+coordinate pairs can be described as [x,y] or [y]. the vector points fro [0,0] to [x,y].
+
+ADDING VECTORS:
+
+                                   [x] + [i]   [x + i]
+[x,y] + [i,j] = [x + i, y + j]  or [y] + [j] = [y + j]
+
+Each vector can be thought of as a displacement to a set of coordinates from the origin. Adding vectors can be thought
+of as moving the origin of one to the point of the other, or summing the x and y displacements of all vectors included
+in the addition.
+
+MULTIPLYING VECTORS BY A CONSTANT:
+
+                      [x]   [ax]
+a[x,y] = [ax,ay] or a [y] = [ay]
+
+I AND J BASIS VECTORS
+                                                             [1]         [0]
+i and j are conventionally unit vectors with coordinates i = [0] and j = [1]. A vector can be described as a sum of i
+and j each scaled by a scalar. For example:
+
+[x]    [1]   [0]
+[y] = x[0] +y[1] = xi + yj
+
+Any 2d vector can be described as a scaling of the basis vectors, assuming the basis vectors aren't zero or overlapping.
+
+
+########################################################################################################################
+                                                    MATRICES
+########################################################################################################################
+
+2D LINEAR TRANSFORMATIONS
+
+Linear transformations take as input a vector and output a different vector. Each linear transformation can act on any
+vector so the linear transformation as a whole can be thought of as a movement of every point on the 2D plane. Linear
+transformations must maintain the origin at 0,0 and keep any line straight. Grid lines remain parallel and evenly
+spaced.
+
+Looking at it numerically:
+
+                                                         [ 1]         [3]
+A linear transformation changes the basis vectors to i = [-2] and j = [0]
+
+example:
+
+         [-1]               [ 1]    [3]   [-1]   [6]   [5]
+vector v [ 2] = -1i + 2j, -1[-2] + 2[0] = [ 2] + [0] = [2] after the transformation
+
+           [x][a b]    [a]    [b]   [xa + yb]
+generally: [y][c d] = x[c] + y[d] = [xc + yd]
+
+A 2D linear transformation can be described using the coordinates where i and j land. The above transformation would be:
+
+  i j
+[ 1 3]  the first column is where i lands.
+[-2 0]  the second is where j lands.
+
+THINK OF MATRICES AS TRANSFORMATIONS OF SPACE!
+
+MULTIPLYING TWO MATRICES
+
+This describes doing multiple transformations in sequence. Note that the order does matter in this case. Sequential
+transformations can be described as a new matrix called the composition
+
+ex:
+[1 1] [0 -1] [x]   [1 -1][x]    here rotation is applied first, then the shear. shear(rotation(x)) = composition.
+[0 1] [1  0] [y] = [1  0][y]
+shear rotate       composition
+
+going about it numerically:
+solving for i first:
+[i *]
+[1 *]
+
+the left column of the rotation show where i lands after the transformation is applied, so multiply that by the shear:
+
+[1 1][0]    [1]    [1]   [0 + 1]   [1]
+[0 1][1] = 0[0] + 1[1] = [0 + 1] = [1].
+
+composition is now:
+[1 j]
+[1 j]
+
+solve where j lands
+
+[1 1][-1]     [1]    [1]   [-1 + 0]   [-1]
+[0 1][ 0] = -1[0] + 0[1] = [0  + 0] = [ 0].
+
+final composition:
+[1 -1]
+[1  0]
+
+
+########################################################################################################################
+                                                    DETERMINANTS
+########################################################################################################################
+
+Linear transformations rotate and stretch space. The determinant is a measure of how much a given area is stretched or
+squished. Note that i and j together form a unit square.
+
+                [3 0]                 [3]     [0]
+Take the matrix [0 2]. i and j become [0] and [2] respectively. They form a rectangle of base 3 and height 2, with an
+area of 6.
+           [1 1]                 [1]          [1]
+the matrix [0 1] transforms i to [0] and j to [1], forming a parallelogram with area 1 as j is sheared.
+
+generally, the area of the shape bounded by the origin, i, j, and i + j is the determinant.
+
+The determinant of the first example is 6 and the second is 1. When the determinant is 0 the 2D area is squished to a
+smaller dimension (line or point).
+
+ORIENTATION
+
+Determinants can be negative. i is by default to the right, and j is up. j is 'to the left' of i. If a transformation
+places i to the left of j, the area is said to be flipped and negative.
+
+    [a b]
+det([c d]) = ad - bc.
+
+########################################################################################################################
+                                                 LINEAR SYSTEMS OF EQUATIONS
+########################################################################################################################
+
+an example linear system of equations:
+
+ax + by = m        [a x][x]   [m]               (where A is the transformation,
+cx + dy = n   or   [c d][y] = [n]   or Ax = v   x is the vector unknown, and v the transformed vector)
+
+If A has nonzero determinant:
+There will be a unique vector x which lands on v after the transformation. x can be found by 'playing A in reverse'
+with v. the transformation corresponding to this is the inverse matrix A^-1
+
+A = clockwise rotation, A^-1 = counterclockwise rotation
+A(A^-1) = identity transformation with i and j at default values
+
+Ax = v, (A^-1)v = x
+
+If A has a zero determinant:
+A transformation that 'squishes' a plane has no inverse. If v lives on this line there will be a solution,
+otherwise there won't be one.
