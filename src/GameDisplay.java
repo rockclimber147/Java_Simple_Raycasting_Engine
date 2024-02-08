@@ -55,7 +55,7 @@ public class GameDisplay extends JFrame implements ChangeListener{
         gameWindow.setOpaque(true);
         gameWindow.setVisible(true);
         this.add(gameWindow);
-
+        this.setResizable(false);
         this.pack();
         this.setVisible(true);
     }

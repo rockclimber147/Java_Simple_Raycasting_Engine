@@ -8,7 +8,6 @@ public class ModelData {
     public double[] targetColor = {0,0,0};
     public int rectangleWidth = 0;
     public int rectangleHeight = 0;
-
     public boolean targetMirror = false;
 
 }
